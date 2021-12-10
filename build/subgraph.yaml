@@ -1,0 +1,38 @@
+specVersion: 0.0.2
+description: Gravatar for Ethereum
+repository: https://github.com/graphprotocol/example-subgraph
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ftmmusd
+    network: fantom
+    source:
+      address: "0x82E9F825aEb4e2F0b98Ed6475BD0BD43de45C01b"
+      abi: ftmmusd
+      startBlock: 23873710
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - ftmmusd
+      abis:
+        - name: ftmmusd
+          file: ftmmusd/abis/ftmmusd.json
+      eventHandlers:
+        - event: CreateVault(uint256,address)
+          handler: handleCreateVault
+        - event: DestroyVault(uint256)
+          handler: handleDestroyVault
+        - event: TransferVault(uint256,address,address)
+          handler: handleTransferVault
+        - event: DepositCollateral(uint256,uint256)
+          handler: handleDepositCollateral
+        - event: WithdrawCollateral(uint256,uint256)
+          handler: handleWithdrawCollateral
+        - event: BorrowToken(uint256,uint256)
+          handler: handleBorrowToken
+        - event: PayBackToken(uint256,uint256,uint256)
+          handler: handlePayBackToken
+      file: ftmmusd/ftmmusd.wasm
